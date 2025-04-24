@@ -1,68 +1,465 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --wizard-dark: #0d1b2a;
+  --wizard-blue: #1b263b;
+  --wizard-gold: #c9a66b;
+  --wizard-parchment: #f5f1e3;
+  --gryffindor: #740001;
+  --slytherin: #1a472a;
+  --ravenclaw: #0e1a40;
+  --hufflepuff: #ffd800;
+  --font-spellbook: "Cinzel", serif;
+  --font-parchment: "Libre Baskerville", serif;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  background-color: var(--wizard-dark);
+  color: var(--wizard-parchment);
+  font-family: var(--font-parchment);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-spellbook);
+  color: var(--wizard-gold);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Navigation */
+.navbar {
+  background-color: var(--wizard-blue);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(201, 166, 107, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-container {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-spellbook);
+  font-size: 1.5rem;
+  color: var(--wizard-gold);
+}
+
+.navbar-logo img {
+  height: 2.5rem;
+  width: auto;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-family: var(--font-spellbook);
+  color: var(--wizard-parchment);
+  transition: color 0.3s ease;
+  font-size: 1.125rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--wizard-gold);
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--wizard-blue);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(201, 166, 107, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(201, 166, 107, 0.2);
+}
+
+.card-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-house-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(27, 38, 59, 0.8);
+  color: var(--wizard-gold);
+  font-family: var(--font-spellbook);
+}
+
+.card-content {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-details {
+  color: rgba(245, 241, 227, 0.8);
+  flex-grow: 1;
+}
+
+.card-actor {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: rgba(201, 166, 107, 0.7);
+  font-style: italic;
+}
+
+/* Button Styles */
+.button {
+  display: inline-block;
+  background-color: var(--wizard-gold);
+  color: var(--wizard-dark);
+  font-family: var(--font-spellbook);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: rgba(201, 166, 107, 0.8);
+  transform: scale(1.05);
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid-cols-sm-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-cols-lg-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Utility Classes */
+.min-h-screen {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mt-12 {
+  margin-top: 3rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+/* House-specific Classes */
+.gryffindor-border {
+  border-color: var(--gryffindor);
+}
+
+.slytherin-border {
+  border-color: var(--slytherin);
+}
+
+.ravenclaw-border {
+  border-color: var(--ravenclaw);
+}
+
+.hufflepuff-border {
+  border-color: var(--hufflepuff);
+}
+
+.gryffindor-bg {
+  background-color: var(--gryffindor);
+}
+
+.slytherin-bg {
+  background-color: var(--slytherin);
+}
+
+.ravenclaw-bg {
+  background-color: var(--ravenclaw);
+}
+
+.hufflepuff-bg {
+  background-color: var(--hufflepuff);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 0;
+}
+
+.spinner {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+}
+
+.spinner::before,
+.spinner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.spinner::before {
+  border: 4px solid rgba(201, 166, 107, 0.2);
+}
+
+.spinner::after {
+  border: 4px solid transparent;
+  border-top-color: var(--wizard-gold);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--wizard-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wizard-gold);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b38d50;
+}
+
+/* Favorite Button Animations */
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes favoriteAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Favorite Button Styles */
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(13, 27, 42, 0.7);
+  border: 1px solid var(--wizard-gold);
+  color: var(--wizard-gold);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  z-index: 5;
+  transition: all 0.2s ease;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.favorite-button:hover {
+  background-color: rgba(201, 166, 107, 0.2);
+  transform: scale(1.1);
+}
+
+.favorite-button.favorite {
+  background-color: var(--wizard-gold);
+  color: var(--wizard-dark);
+  animation: favoriteAnimation 0.3s ease;
+}
+
+.favorite-button.favorite:hover {
+  background-color: rgba(201, 166, 107, 0.8);
 }
