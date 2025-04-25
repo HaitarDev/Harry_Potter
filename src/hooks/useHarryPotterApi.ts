@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Character, Spell } from "../types";
 
-const API_BASE_URL = "https://hp-api.onrender.com/api";
+// Update API base URL to point to our backend
+const API_BASE_URL = "https://harry-potter-backend-1-y2s8.onrender.com/api";
 
 // Fetch all characters
 export const useCharacters = () => {
@@ -22,12 +23,11 @@ export const useCharacter = (id: string) => {
   return useQuery<Character>({
     queryKey: ["character", id],
     queryFn: async () => {
-      const response = await fetch(`${API_BASE_URL}/character/${id}`);
+      const response = await fetch(`${API_BASE_URL}/characters/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch character");
       }
-      const characters = await response.json();
-      return characters[0]; // API returns an array with a single character
+      return response.json(); // Backend now returns the character directly, not an array
     },
     enabled: !!id,
   });
@@ -38,7 +38,9 @@ export const useHogwartsStudents = () => {
   return useQuery<Character[]>({
     queryKey: ["hogwartsStudents"],
     queryFn: async () => {
-      const response = await fetch(`${API_BASE_URL}/characters/students`);
+      const response = await fetch(
+        `${API_BASE_URL}/characters/hogwarts/students`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch Hogwarts students");
       }
@@ -52,7 +54,7 @@ export const useHogwartsStaff = () => {
   return useQuery<Character[]>({
     queryKey: ["hogwartsStaff"],
     queryFn: async () => {
-      const response = await fetch(`${API_BASE_URL}/characters/staff`);
+      const response = await fetch(`${API_BASE_URL}/characters/hogwarts/staff`);
       if (!response.ok) {
         throw new Error("Failed to fetch Hogwarts staff");
       }

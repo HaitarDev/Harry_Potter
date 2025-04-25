@@ -6,8 +6,16 @@ import CharactersPage from "./pages/CharactersPage";
 import CharacterDetailPage from "./pages/CharacterDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
 
-// Create a client
-const queryClient = new QueryClient();
+// Create a client with better configuration
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1, // Only retry once on failure
+      refetchOnWindowFocus: false, // Don't refetch when window regains focus
+      staleTime: 1000 * 60 * 5, // Data stays fresh for 5 minutes
+    },
+  },
+});
 
 function App() {
   return (

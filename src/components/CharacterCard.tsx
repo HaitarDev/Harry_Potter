@@ -32,6 +32,13 @@ const CharacterCard = ({ character }: CharacterCardProps) => {
 
   const isFav = isFavorite(character.id);
 
+  // Determine faculty status
+  const getFacultyStatus = () => {
+    if (character.hogwartsStudent) return "Student";
+    if (character.hogwartsStaff) return "Staff";
+    return null;
+  };
+
   return (
     <Link to={`/characters/${character.id}`}>
       <div
@@ -65,15 +72,22 @@ const CharacterCard = ({ character }: CharacterCardProps) => {
         <div className="card-content">
           <h3 className="card-title">{character.name}</h3>
           <div className="card-details">
-            {character.hogwartsStudent && <p>Hogwarts Student</p>}
-            {character.hogwartsStaff && <p>Hogwarts Staff</p>}
             {character.species !== "human" && (
               <p>Species: {character.species}</p>
             )}
           </div>
-          {character.actor && (
-            <div className="card-actor">Played by: {character.actor}</div>
-          )}
+          <div className="card-info">
+            {getFacultyStatus() && (
+              <div style={{ marginBottom: "0.25rem" }}>
+                <strong>Faculty:</strong> {getFacultyStatus()}
+              </div>
+            )}
+            {character.patronus && (
+              <div>
+                <strong>Patronus:</strong> {character.patronus}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Link>
